@@ -1,0 +1,21 @@
+jwt:
+  secret: javainuse
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/reserveroom
+    username: postgres
+    password: broly397154
+
+  #    initialization-mode: ALWAYS
+  #    schema: classpath*:database/create.sql
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl: ERROR

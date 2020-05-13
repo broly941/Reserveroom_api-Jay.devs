@@ -45,7 +45,7 @@ public class EventService {
 
     private EventResponse convertEntity2Dto(Event event) {
         EventResponse dto = new EventResponse();
-        dto.setFinishDate(event.getStartTime());
+        dto.setStartDate(event.getStartTime());
         dto.setFinishDate(event.getFinishTime());
         dto.setUser(new UserResponse(event.getUser()));
         dto.setRoom(new RoomResponse(event.getRoom()));

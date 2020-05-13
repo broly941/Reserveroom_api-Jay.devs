@@ -1,6 +1,7 @@
 package com.javainuse.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +17,7 @@ import com.javainuse.model.dto.JwtRequest;
 import com.javainuse.model.dto.JwtResponse;
 import com.javainuse.model.dto.UserRequest;
 
+@Slf4j
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
@@ -27,6 +29,7 @@ public class JwtAuthenticationController {
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
+		log.info("Authenticate request. Name: {}}, Password: {}}.", authenticationRequest.getUsername(), authenticationRequest.getPassword());
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());

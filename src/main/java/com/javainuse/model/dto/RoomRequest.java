@@ -9,5 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RoomRequest {
+    private Long roomId;
     private String name;
+
 }

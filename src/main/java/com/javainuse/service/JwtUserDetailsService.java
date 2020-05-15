@@ -39,26 +39,26 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     public UserResponse create(UserRequest dto) {
+        User user = convertToEntity(dto);
+        return new UserResponse(userRepository.save(user));
+    }
+
+    public List<UserResponse> getAllUsers() {
+        return ((Collection<User>) userRepository.findAll()).stream()
+                .map(UserResponse::new)
+                .collect(Collectors.toList());
+    }
+
+    public UserResponse getUserByName(String username) {
+        return new UserResponse(userRepository.findByUserName(username));
+    }
+
+    private User convertToEntity(UserRequest dto) {
         User user = new User();
         user.setUserName(dto.getUserName());
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setEmail(dto.getEmail());
         user.setMobilePhoneNumber(dto.getMobilePhoneNumber());
-        return convertEntity2Dto(userRepository.save(user));
-    }
-
-    public List<UserResponse> getAllUsers() {
-        return ((Collection<User>) userRepository.findAll()).stream()
-                .map(this::convertEntity2Dto)
-                .collect(Collectors.toList());
-    }
-
-    private UserResponse convertEntity2Dto(User user) {
-        UserResponse dto = new UserResponse();
-        dto.setUserName(user.getUserName());
-        dto.setPassword(user.getPassword());
-        dto.setEmail(user.getEmail());
-        dto.setMobilePhoneNumber(user.getMobilePhoneNumber());
-        return dto;
+        return user;
     }
 }

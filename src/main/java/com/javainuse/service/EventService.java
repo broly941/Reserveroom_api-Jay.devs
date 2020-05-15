@@ -3,8 +3,6 @@ package com.javainuse.service;
 import com.javainuse.model.Event;
 import com.javainuse.model.dto.EventRequest;
 import com.javainuse.model.dto.EventResponse;
-import com.javainuse.model.dto.RoomResponse;
-import com.javainuse.model.dto.UserResponse;
 import com.javainuse.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,34 +20,25 @@ public class EventService {
     private final RoomService roomService;
 
     public EventResponse create(EventRequest eventRequest) {
-        Event event = convertDto2Entity(eventRequest);
-        return convertEntity2Dto(eventRepository.save(event));
+        Event event = convertToEntity(eventRequest);
+        return new EventResponse(eventRepository.save(event));
     }
 
     public List<EventResponse> getAllEvents() {
         return ((Collection<Event>) eventRepository.findAll()).stream()
-                .map(this::convertEntity2Dto)
+                .map(EventResponse::new)
                 .collect(Collectors.toList());
     }
 
-    private Event convertDto2Entity(EventRequest dto) {
+    private Event convertToEntity(EventRequest request) {
         Event event = new Event();
-        event.setRoom(roomService.findById(dto.getRoomId())
+        event.setRoom(roomService.findById(request.getRoomId())
                 .orElseThrow(() -> new RuntimeException("Room not found by")));
-        event.setUser(userService.findById(dto.getUserId())
+        event.setUser(userService.findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found.")));
-        event.setStartTime(new Date(dto.getStartTimeNumber()));
-        event.setFinishTime(new Date(dto.getFinishTimeNumber()));
+        event.setStartTime(new Date(request.getStartTimeNumber()));
+        event.setFinishTime(new Date(request.getFinishTimeNumber()));
         return event;
-    }
-
-    private EventResponse convertEntity2Dto(Event event) {
-        EventResponse dto = new EventResponse();
-        dto.setStartDate(event.getStartTime());
-        dto.setFinishDate(event.getFinishTime());
-        dto.setUser(new UserResponse(event.getUser()));
-        dto.setRoom(new RoomResponse(event.getRoom()));
-        return dto;
     }
 }
 

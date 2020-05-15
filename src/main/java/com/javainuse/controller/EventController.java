@@ -35,7 +35,7 @@ public class EventController {
 
     @GetMapping("/byName/{username}")
     public ResponseEntity<?> getAllEventsByName(@PathVariable String username) {
-        //todo process this
+        //todo process this. now returns for all.
         log.info("Get all events by name {}.", username);
         List<EventResponse> allEvents = eventService.getAllEvents();
         return ResponseEntity.ok(allEvents);

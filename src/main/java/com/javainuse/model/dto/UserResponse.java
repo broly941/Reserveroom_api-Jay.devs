@@ -9,14 +9,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserResponse {
+    private Long userId;
     private String userName;
     private String password;
     private String email;
     private String mobilePhoneNumber;
 
     public UserResponse(User user) {
+        userId = user.getId();
         userName = user.getUserName();
-        password = user.getPassword();
         email = user.getEmail();
         mobilePhoneNumber = user.getMobilePhoneNumber();
     }

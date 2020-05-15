@@ -1,5 +1,6 @@
 package com.javainuse.model.dto;
 
+import com.javainuse.model.Event;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,4 +16,14 @@ public class EventResponse {
     private RoomResponse room;
     private Date startDate;
     private Date finishDate;
+
+    public EventResponse() {
+    }
+
+    public EventResponse(Event event) {
+        user = new UserResponse(event.getUser());
+        room = new RoomResponse(event.getRoom());
+        startDate = event.getStartTime();
+        finishDate = event.getFinishTime();
+    }
 }

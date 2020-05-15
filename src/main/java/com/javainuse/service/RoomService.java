@@ -24,18 +24,12 @@ public class RoomService {
     public RoomResponse create(RoomRequest dto) {
         Room room = new Room();
         room.setName(dto.getName());
-        return convertEntity2Dto(roomRepository.save(room));
+        return new RoomResponse(roomRepository.save(room));
     }
 
     public List<RoomResponse> getAllRooms() {
         return ((Collection<Room>) roomRepository.findAll()).stream()
-                .map(this::convertEntity2Dto)
+                .map(RoomResponse::new)
                 .collect(Collectors.toList());
-    }
-
-    private RoomResponse convertEntity2Dto(Room room) {
-        RoomResponse dto = new RoomResponse();
-        dto.setName(room.getName());
-        return dto;
     }
 }

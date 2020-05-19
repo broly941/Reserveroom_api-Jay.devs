@@ -40,6 +40,12 @@ public class EventService {
         event.setFinishTime(new Date(request.getFinishTimeNumber()));
         return event;
     }
+
+    public List<EventResponse> getAllEventsByUserId(Long userId) {
+        return eventRepository.findAllByUserId(userId).stream()
+                .map(EventResponse::new)
+                .collect(Collectors.toList());
+    }
 }
 
 

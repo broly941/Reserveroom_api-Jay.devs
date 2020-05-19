@@ -49,10 +49,6 @@ public class JwtUserDetailsService implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
-    public UserResponse getUserByName(String username) {
-        return new UserResponse(userRepository.findByUserName(username));
-    }
-
     private User convertToEntity(UserRequest dto) {
         User user = new User();
         user.setUserName(dto.getUserName());
@@ -60,5 +56,9 @@ public class JwtUserDetailsService implements UserDetailsService {
         user.setEmail(dto.getEmail());
         user.setMobilePhoneNumber(dto.getMobilePhoneNumber());
         return user;
+    }
+
+    public UserResponse getUserByName(String username) {
+        return new UserResponse(userRepository.findByUserName(username));
     }
 }

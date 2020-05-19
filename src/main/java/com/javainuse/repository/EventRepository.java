@@ -9,4 +9,5 @@ import java.util.Collection;
 @Repository
 public interface EventRepository extends CrudRepository<Event, Long> {
     Collection<Event> findAllByUserId(Long userId);
+
 }
